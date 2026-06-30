@@ -10,10 +10,15 @@ export function DigitalMarketingSection() {
       <div className="marketing-section__visual">
         <CameraFrameSequence
           frameRoot="/marketing-frames"
-          framePrefix="ezgif-frame-"
+          filePrefix="frame_"
+          extension="jpg"
+          padLength={4}
           frameCount={120}
           criticalFrames={18}
           scrollTargetSelector="#digital-marketing"
+          scrollStartOffsetVh={-0.12}
+          scrollDistanceMultiplier={0.68}
+          bgColor="#06030c"
           onReady={handleReady}
         />
       </div>

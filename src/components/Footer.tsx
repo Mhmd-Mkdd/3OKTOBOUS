@@ -1,6 +1,7 @@
 export function Footer() {
   return (
     <footer className="footer">
+      <div className="footer__aurora" aria-hidden="true" />
       <div className="footer__inner">
         <div className="footer__brand">
           <a className="footer__logo" href="/" aria-label="Octopus home">
@@ -14,17 +15,17 @@ export function Footer() {
         <div className="footer__nav">
           <div className="footer__col">
             <h4>Navigation</h4>
-            <a href="#work">Work</a>
-            <a href="#services">Services</a>
+            <a href="#photography">Photography</a>
+            <a href="#video-editing">Video</a>
             <a href="#studio">Studio</a>
             <a href="#contact">Contact</a>
           </div>
           <div className="footer__col">
             <h4>Services</h4>
-            <span>Photography</span>
-            <span>Video Editing</span>
-            <span>Content Production</span>
-            <span>Web Development</span>
+            <a href="#content-production">Content</a>
+            <a href="#digital-marketing">Marketing</a>
+            <a href="#web-development">Web</a>
+            <a href="#app-development">Apps</a>
           </div>
           <div className="footer__col">
             <h4>Social</h4>
@@ -43,8 +44,12 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <div className="footer__giant" aria-hidden="true">
+        <span>Octopus</span>
+      </div>
       <div className="footer__bottom">
         <span>&copy; {new Date().getFullYear()} Octopus. All rights reserved.</span>
+        <span className="footer__credit">Crafted in Beirut · For brands built to move</span>
       </div>
     </footer>
   );

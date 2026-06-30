@@ -10,10 +10,15 @@ export function WebDevelopmentSection() {
       <div className="web-section__visual">
         <CameraFrameSequence
           frameRoot="/web-frames"
-          framePrefix="ezgif-frame-"
+          filePrefix="frame_"
+          extension="jpg"
+          padLength={4}
           frameCount={120}
           criticalFrames={18}
           scrollTargetSelector="#web-development"
+          scrollStartOffsetVh={-0.12}
+          scrollDistanceMultiplier={0.68}
+          bgColor="#02060c"
           onReady={handleReady}
         />
       </div>

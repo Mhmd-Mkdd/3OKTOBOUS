@@ -1,0 +1,732 @@
+/* =====================================================================
+   3OKTOBOUS — "igloo.inc" experience layer
+   Styles for: AuroraBackground, FloatingNav, BlendCursor, FilmGrain,
+   GenerativeCanvas, BentoCapabilities, MagneticButton, MarqueeStrip,
+   and enhanced Footer.
+   ===================================================================== */
+
+/* ── Aurora background (living brand gradient) ──────────────────────── */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* Make the hero intro opaque so the aurora reads as the body backdrop */
+body {
+  position: relative;
+  background: #05030c;
+}
+
+/* ── Blend cursor ──────────────────────────────────────────────────── */
+
+.blend-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.blend-cursor__dot,
+.blend-cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+
+.blend-cursor__dot {
+  width: 7px;
+  height: 7px;
+  background: #fff;
+}
+
+.blend-cursor__ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgb(255 255 255 / 0.8);
+  background: radial-gradient(circle, rgb(126 80 255 / calc(0.25 * var(--cursor-hover, 0))), transparent 70%);
+  transition: opacity 220ms ease;
+}
+
+html.has-blend-cursor,
+html.has-blend-cursor a,
+html.has-blend-cursor button {
+  cursor: none;
+}
+
+/* ── Floating nav + scroll spine ───────────────────────────────────── */
+
+.floating-nav {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 30px);
+  max-width: min(1080px, calc(100% - 32px));
+  height: 60px;
+  padding: 0 8px 0 20px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 999px;
+  background: rgb(12 8 24 / 0.55);
+  backdrop-filter: blur(22px) saturate(140%);
+  box-shadow: 0 18px 60px rgb(0 0 0 / 0.35);
+  opacity: 0;
+  transform: translateX(-50%) translateY(-18px);
+  transition: opacity 480ms ease, transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.floating-nav.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.floating-nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "General Sans", "Geist Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.floating-nav__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00a0ff, #7e50ff 55%, #fd00ff);
+  box-shadow: 0 0 16px rgb(126 80 255 / 0.7);
+}
+
+.floating-nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 20px);
+  margin: 0 auto;
+}
+
+.floating-nav__links a {
+  color: rgb(255 255 255 / 0.62);
+  font-size: 0.84rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 200ms ease;
+  position: relative;
+}
+
+.floating-nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #00a0ff, #fd00ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms ease;
+}
+
+.floating-nav__links a:hover,
+.floating-nav__links a.is-active {
+  color: #fff;
+}
+
+.floating-nav__links a.is-active::after {
+  transform: scaleX(1);
+}
+
+.floating-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00a0ff, #7e50ff 55%, #fd00ff);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgb(126 80 255 / 0.4);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.floating-nav__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgb(126 80 255 / 0.55);
+}
+
+/* Scroll progress spine */
+.scroll-spine {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 480ms ease;
+}
+
+.scroll-spine.is-visible {
+  opacity: 1;
+}
+
+.scroll-spine__track {
+  position: relative;
+  width: 3px;
+  height: 180px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  overflow: hidden;
+}
+
+.scroll-spine__progress {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  background: linear-gradient(180deg, #00e0ff, #7e50ff 50%, #fd00ff);
+  box-shadow: 0 0 16px rgb(126 80 255 / 0.6);
+}
+
+.scroll-spine__label {
+  font-family: "General Sans", "Geist Sans", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgb(255 255 255 / 0.7);
+  letter-spacing: 0.04em;
+}
+
+/* ── Generative canvas (fills service visual slots) ─────────────────── */
+
+.generative-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Bento capabilities grid ───────────────────────────────────────── */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  gap: 18px;
+}
+
+.bento__tile {
+  position: relative;
+  grid-column: span 2;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(12 8 24 / 0.6);
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  will-change: transform;
+}
+
+.bento__tile:hover {
+  border-color: rgb(126 80 255 / 0.4);
+  box-shadow: 0 30px 70px rgb(0 0 0 / 0.45);
+}
+
+.bento__tile--lg {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.bento__tile--wide {
+  grid-column: span 2;
+}
+
+.bento__glow {
+  position: absolute;
+  --mx: 50%;
+  --my: 50%;
+  inset: -30%;
+  opacity: 0.4;
+  filter: blur(60px);
+  transform: translate3d(0, 0, 0);
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / 0.18), transparent 40%),
+    var(--bg, linear-gradient(135deg, #00a0ff, #fd00ff));
+  transition: opacity 260ms ease;
+}
+
+.bento__tile:hover .bento__glow {
+  opacity: 0.7;
+}
+
+.bento__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: clamp(20px, 2.4vw, 30px);
+  color: #fff;
+}
+
+.bento__glyph {
+  position: absolute;
+  top: clamp(20px, 2.4vw, 30px);
+  right: clamp(20px, 2.4vw, 30px);
+  font-size: 1.6rem;
+  color: rgb(255 255 255 / 0.85);
+  text-shadow: 0 0 20px rgb(126 80 255 / 0.6);
+}
+
+.bento__title {
+  margin: 0 0 6px;
+  font-family: "General Sans", "Geist Sans", sans-serif;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.bento__desc {
+  margin: 0;
+  max-width: 420px;
+  color: rgb(255 255 255 / 0.72);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* ── Stronger 3D depth ─────────────────────────────────────────────── */
+
+/* Give the whole document a perspective context for 3D children */
+.section__inner {
+  perspective: 1400px;
+}
+
+/* Bento tiles: deeper, snappier 3D + elevated resting state */
+.bento__tile {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 18px 40px rgb(0 0 0 / 0.35);
+  transform: perspective(1000px) rotateX(0) rotateY(0) translateZ(0);
+}
+
+.bento__tile:hover {
+  transform: perspective(1000px) rotateX(var(--rx, 0)) rotateY(var(--ry, 0)) translateZ(18px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.1) inset,
+    0 40px 90px rgb(0 0 0 / 0.5),
+    0 0 50px rgb(126 80 255 / 0.25);
+}
+
+/* Inner content lifts on a separate plane for true parallax */
+.bento__content {
+  transform: translateZ(40px);
+  transition: transform 260ms ease;
+}
+
+.bento__glyph {
+  transform: translateZ(70px);
+  transition: transform 260ms ease;
+}
+
+.bento__tile:hover .bento__content {
+  transform: translateZ(60px);
+}
+
+/* Section service cards: subtle 3D card with layered edge highlight */
+.photography-section,
+.video-section,
+.content-section,
+.marketing-section,
+.web-section,
+.app-section {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 30px 80px rgb(0 0 0 / 0.5);
+  transform: translateZ(0);
+}
+
+/* Section headings: depth + gradient shimmer */
+.section__heading {
+  background: linear-gradient(120deg, #ffffff 0%, #b9a8ff 45%, #ff8be0 70%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 60px rgb(126 80 255 / 0.25);
+}
+
+/* Value cards get a glassy 3D lift */
+.value-card {
+  transform-style: preserve-3d;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 320ms ease;
+}
+
+.value-card:hover {
+  transform: translateY(-6px) rotateX(6deg);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.08) inset,
+    0 28px 60px rgb(0 0 0 / 0.45);
+}
+
+/* Studio stat tiles: subtle pop */
+.studio-stat {
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 320ms ease;
+}
+
+.studio-stat:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 50px rgb(126 80 255 / 0.18);
+}
+
+/* ── Magnetic elements ─────────────────────────────────────────────── */
+
+.magnetic {
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* ── Kinetic marquee strip ─────────────────────────────────────────── */
+
+.marquee-strip {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 26px 0;
+  background: #05030c;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.marquee-strip__row {
+  display: flex;
+  width: max-content;
+  gap: 48px;
+  padding-right: 48px;
+  animation: marqueeStrip 28s linear infinite;
+}
+
+.marquee-strip__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  font-family: "General Sans", "Geist Sans", sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.55);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marquee-strip__item:nth-child(odd) {
+  color: #fff;
+  -webkit-text-stroke: 0;
+}
+
+.marquee-strip__star {
+  font-style: normal;
+  color: #fd00ff;
+  font-size: 0.7em;
+  text-shadow: 0 0 18px rgb(253 0 255 / 0.7);
+}
+
+@keyframes marqueeStrip {
+  to { transform: translateX(-33.333%); }
+}
+
+/* ── Enhanced footer ───────────────────────────────────────────────── */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: #05030c;
+  color: #fff;
+}
+
+.footer__aurora {
+  position: absolute;
+  inset: -20% 0 auto;
+  height: 80%;
+  background:
+    radial-gradient(60% 60% at 20% 30%, rgb(0 160 255 / 0.22), transparent 60%),
+    radial-gradient(60% 60% at 80% 20%, rgb(253 0 255 / 0.18), transparent 60%),
+    radial-gradient(60% 60% at 50% 80%, rgb(126 80 255 / 0.2), transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.footer__giant {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-top: clamp(20px, 4vh, 48px);
+}
+
+.footer__giant span {
+  font-family: "General Sans", "Geist Sans", sans-serif;
+  font-size: clamp(4rem, 18vw, 16rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.02));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer__credit {
+  color: rgb(255 255 255 / 0.5);
+  font-size: 0.82rem;
+}
+
+/* ── Hero intro: dark cinematic variant (lets aurora through) ──────── */
+
+.hero-logo-intro {
+  background:
+    radial-gradient(120% 80% at 50% 10%, rgb(0 160 255 / 0.12), transparent 56%),
+    linear-gradient(180deg, rgb(5 3 12 / 0.4), rgb(5 3 12 / 0.7));
+}
+
+.hero-logo-intro::before {
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+.hero-logo-intro::after {
+  background: linear-gradient(180deg, transparent, rgb(5 3 12 / 0.85));
+}
+
+.hero-logo-intro__word {
+  background: linear-gradient(110deg, #ffffff 8%, var(--violet) 50%, var(--magenta) 74%, #ffffff 94%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-logo-intro__letter {
+  background: linear-gradient(110deg, #ffffff 8%, var(--violet) 50%, var(--magenta) 74%, #ffffff 94%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-logo-intro__descriptor {
+  color: rgb(255 255 255 / 0.66);
+}
+
+.hero-logo-intro__service {
+  border-color: rgb(255 255 255 / 0.12);
+  color: rgb(255 255 255 / 0.7);
+  background: rgb(255 255 255 / 0.04);
+}
+
+.hero-logo-intro__transition-field {
+  background:
+    linear-gradient(180deg, rgb(5 3 12 / 0), rgb(5 3 12 / 0.8) 54%, rgb(5 3 12) 100%),
+    linear-gradient(135deg, rgb(0 160 255 / 0.08), rgb(126 80 255 / 0.08), rgb(253 0 255 / 0.06));
+}
+
+.hero-logo-intro__mark-shell {
+  box-shadow:
+    0 28px 70px rgb(126 80 255 / 0.35),
+    0 0 0 1px rgb(255 255 255 / 0.16) inset,
+    0 0 80px rgb(126 80 255 / 0.28);
+}
+
+.hero-logo-intro__mark-shell::before {
+  border-color: rgb(126 80 255 / 0.4);
+  background:
+    radial-gradient(circle at 30% 20%, rgb(0 160 255 / 0.4), transparent 42%),
+    radial-gradient(circle at 70% 75%, rgb(253 0 255 / 0.32), transparent 45%);
+}
+
+.hero-logo-intro__mark-image {
+  filter: drop-shadow(0 0 26px rgb(255 255 255 / 0.25));
+}
+
+/* ── Section contrast tweaks over dark body ────────────────────────── */
+
+.section--default {
+  background: rgb(8 5 18 / 0.86);
+  color: hsl(0 0% 100%);
+}
+
+.section--alt {
+  background: rgb(14 10 28 / 0.9);
+  color: hsl(0 0% 100%);
+}
+
+.section--dark {
+  background: #05030c;
+  color: hsl(0 0% 100%);
+}
+
+.section--default .section__heading,
+.section--alt .section__heading,
+.section--dark .section__heading {
+  color: #fff;
+}
+
+.section--default .section__label,
+.section--alt .section__label {
+  color: #c9b8ff;
+}
+
+.section--default .studio-prose p,
+.section--alt .studio-prose p {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.section--default .studio-stat,
+.section--alt .studio-stat {
+  background: rgb(255 255 255 / 0.04);
+  border: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.section--default .value-card,
+.section--alt .value-card {
+  background: rgb(255 255 255 / 0.03);
+  border-color: rgb(255 255 255 / 0.08);
+}
+
+.section--default .value-card__desc,
+.section--alt .value-card__desc {
+  color: rgb(255 255 255 / 0.66);
+}
+
+.section--default .studio-stat__label,
+.section--alt .studio-stat__label {
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* Service-section overlay readability on dark */
+.photography-section,
+.video-section,
+.content-section,
+.marketing-section,
+.web-section,
+.app-section {
+  border: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.photography-section__title,
+.video-section__title,
+.content-section__title,
+.marketing-section__title,
+.web-section__title,
+.app-section__title {
+  color: #fff;
+}
+
+.photography-section__desc,
+.video-section__desc,
+.content-section__desc,
+.marketing-section__desc,
+.web-section__desc,
+.app-section__desc {
+  color: rgb(255 255 255 / 0.75);
+}
+
+.photography-section__detail-value,
+.video-section__detail-value,
+.content-section__detail-value,
+.marketing-section__detail-value,
+.web-section__detail-value,
+.app-section__detail-value {
+  color: #fff;
+}
+
+.photography-section__detail-label,
+.video-section__detail-label,
+.content-section__detail-label,
+.marketing-section__detail-label,
+.web-section__detail-label,
+.app-section__detail-label {
+  color: rgb(255 255 255 / 0.55);
+}
+
+/* Contact form on dark */
+.contact-form input,
+.contact-form textarea {
+  background: rgb(255 255 255 / 0.04);
+  border-color: rgb(255 255 255 / 0.14);
+  color: #fff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgb(255 255 255 / 0.4);
+}
+
+.contact-form label {
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* ── Responsive for new components ─────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .floating-nav__links {
+    display: none;
+  }
+  .scroll-spine {
+    display: none;
+  }
+  .bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bento__tile,
+  .bento__tile--lg,
+  .bento__tile--wide {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+  .bento__tile,
+  .bento__tile--lg,
+  .bento__tile--wide {
+    grid-column: span 1;
+  }
+  .floating-nav__cta {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-strip__row,
+  .film-grain__canvas {
+    animation: none !important;
+  }
+}

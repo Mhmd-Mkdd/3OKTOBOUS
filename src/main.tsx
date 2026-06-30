@@ -5,6 +5,7 @@ import "@fontsource/geist-sans/500.css";
 import "@fontsource/geist-sans/600.css";
 import "@fontsource/geist-sans/700.css";
 import "./styles.css";
+import "./experience.css";
 import { App } from "./App";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

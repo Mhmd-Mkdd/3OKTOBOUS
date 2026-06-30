@@ -10,10 +10,22 @@ import { StudioSection } from "./components/StudioSection";
 import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 
+// Experience layers
+import { AuroraBackground } from "./components/AuroraBackground";
+import { FloatingNav } from "./components/FloatingNav";
+import { BlendCursor } from "./components/BlendCursor";
+import { BentoCapabilities } from "./components/BentoCapabilities";
+import { MarqueeStrip } from "./components/MarqueeStrip";
+
 export function App() {
   return (
     <>
+      <AuroraBackground />
+      <BlendCursor />
+      <FloatingNav />
+
       <HeroLogoIntro />
+
       <Section
         id="photography"
         heading="Photography"
@@ -23,6 +35,7 @@ export function App() {
       >
         <PhotographySection />
       </Section>
+
       <Section
         id="video-editing"
         heading="Video Editing"
@@ -31,6 +44,9 @@ export function App() {
       >
         <VideoEditingSection />
       </Section>
+
+      <MarqueeStrip />
+
       <Section
         id="content-production"
         heading="Content Production"
@@ -39,6 +55,7 @@ export function App() {
       >
         <ContentProductionSection />
       </Section>
+
       <Section
         id="digital-marketing"
         heading="Digital Marketing"
@@ -47,6 +64,16 @@ export function App() {
       >
         <DigitalMarketingSection />
       </Section>
+
+      <Section
+        id="capabilities"
+        heading="Full-Stack Capabilities"
+        subheading="What We Do"
+        variant="default"
+      >
+        <BentoCapabilities />
+      </Section>
+
       <Section
         id="web-development"
         heading="Web Development"
@@ -55,6 +82,7 @@ export function App() {
       >
         <WebDevelopmentSection />
       </Section>
+
       <Section
         id="app-development"
         heading="App Development"
@@ -63,6 +91,7 @@ export function App() {
       >
         <AppDevelopmentSection />
       </Section>
+
       <Section
         id="studio"
         heading="The Studio"
@@ -71,6 +100,7 @@ export function App() {
       >
         <StudioSection />
       </Section>
+
       <Section
         id="contact"
         heading="Let's Talk"
@@ -79,6 +109,7 @@ export function App() {
       >
         <ContactSection />
       </Section>
+
       <Footer />
     </>
   );

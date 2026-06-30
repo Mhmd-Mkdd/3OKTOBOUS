@@ -10,10 +10,15 @@ export function AppDevelopmentSection() {
       <div className="app-section__visual">
         <CameraFrameSequence
           frameRoot="/app-frames"
-          framePrefix="ezgif-frame-"
+          filePrefix="frame_"
+          extension="jpg"
+          padLength={4}
           frameCount={120}
           criticalFrames={18}
           scrollTargetSelector="#app-development"
+          scrollStartOffsetVh={-0.12}
+          scrollDistanceMultiplier={0.68}
+          bgColor="#04000c"
           onReady={handleReady}
         />
       </div>
